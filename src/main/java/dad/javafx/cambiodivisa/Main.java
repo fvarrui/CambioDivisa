@@ -1,9 +1,9 @@
-package dad.javafx.template;
+package dad.javafx.cambiodivisa;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO implementar aquí mis cositas
+		App.main(args);
 	}
 
 }

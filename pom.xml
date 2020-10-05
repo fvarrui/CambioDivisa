@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dad.javafx</groupId>
-	<artifactId>JavaFXTemplate</artifactId>
+	<artifactId>CambioDivisa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	<name>JavaFXTemplate</name>
-	<description>Plantilla de proyecto JavaFX.</description>
+	<name>CambioDivisa</name>
+	<description>Aplicación de cambio de divisa en JavaFX.</description>
 
 	<properties>
 		<maven.compiler.target>14</maven.compiler.target>
 		<maven.compiler.source>14</maven.compiler.source>
-		<exec.mainClass>dad.javafx.template.Main</exec.mainClass>
+		<exec.mainClass>dad.javafx.cambiodivisa.Main</exec.mainClass>
 	</properties>
 
 	<dependencies>
