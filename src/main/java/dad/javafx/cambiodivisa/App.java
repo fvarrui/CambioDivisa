@@ -1,20 +1,28 @@
 package dad.javafx.cambiodivisa;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
+	
+	private Divisa euro = new Divisa("Euro", 1.0);
+	private Divisa libra = new Divisa("Libra", 0.9);
+	private Divisa dolar = new Divisa("Dolar", 1.2);
+	private Divisa yen = new Divisa("Yen", 133.6);
+	
+	private Divisa [] divisas = { euro, libra, dolar, yen };
 
 	private TextField origenText, destinoText;
-	private ComboBox origenCombo, destinoCombo;
+	private ComboBox<Divisa> origenCombo;
+	private ComboBox<Divisa> destinoCombo;
 	private Button cambiarButton;
 	
 	@Override
@@ -23,7 +31,10 @@ public class App extends Application {
 		origenText = new TextField("0");
 		origenText.setPrefColumnCount(4);
 
-		origenCombo = new ComboBox();
+		origenCombo = new ComboBox<>();
+		origenCombo.getItems().addAll(divisas);
+		origenCombo.getSelectionModel().select(euro);
+//		origenCombo.getSelectionModel().selectFirst(); // selecciona el primer item del combo
 		
 		HBox origenBox = new HBox();
 		origenBox.setAlignment(Pos.BASELINE_CENTER);
@@ -32,8 +43,11 @@ public class App extends Application {
 		
 		destinoText = new TextField("0");
 		destinoText.setPrefColumnCount(4);
+		destinoText.setEditable(false);
 		
-		destinoCombo = new ComboBox();
+		destinoCombo = new ComboBox<>();
+		destinoCombo.getItems().addAll(divisas);
+		destinoCombo.getSelectionModel().select(libra);
 
 		HBox destinoBox = new HBox();
 		destinoBox.setAlignment(Pos.BASELINE_CENTER);
@@ -41,6 +55,7 @@ public class App extends Application {
 		destinoBox.getChildren().addAll(destinoText, destinoCombo);
 		
 		cambiarButton = new Button("Cambiar");
+		cambiarButton.setOnAction(e -> onCambiarAction(e));
 		
 		VBox root = new VBox();
 		root.setSpacing(5);
@@ -53,6 +68,17 @@ public class App extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+	}
+
+	private void onCambiarAction(ActionEvent e) {
+		Double cantidadOrigen = Double.parseDouble(origenText.getText());
+		Divisa divisaOrigen = origenCombo.getSelectionModel().getSelectedItem();
+		Divisa divisaDestino = destinoCombo.getSelectionModel().getSelectedItem();
+		
+		Double enEuros = divisaOrigen.toEuro(cantidadOrigen);
+		Double cantidadDestino = divisaDestino.fromEuro(enEuros);
+		
+		destinoText.setText("" + cantidadDestino);
 	}
 
 	public static void main(String[] args) {
